@@ -47,6 +47,15 @@ const IncidentSchema = new Schema<IIncident>(
   { timestamps: true }
 );
 
+// Auto-generate incidentNumber if missing
+IncidentSchema.pre("validate", function (next) {
+  if (!this.incidentNumber) {
+    this.incidentNumber = `INC-${Math.floor(10000 + Math.random() * 90000)}`;
+  }
+  next();
+});
+
 IncidentSchema.index({ status: 1, severity: 1 });
+
 
 export const Incident = model<IIncident>("Incident", IncidentSchema);

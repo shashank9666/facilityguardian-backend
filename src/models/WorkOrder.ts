@@ -65,7 +65,16 @@ const WorkOrderSchema = new Schema<IWorkOrder>(
   { timestamps: true }
 );
 
+// Auto-generate woNumber if missing
+WorkOrderSchema.pre("validate", function (next) {
+  if (!this.woNumber) {
+    this.woNumber = `WO-${Math.floor(10000 + Math.random() * 90000)}`;
+  }
+  next();
+});
+
 WorkOrderSchema.index({ status: 1, priority: 1 });
+
 WorkOrderSchema.index({ title: "text", woNumber: "text" });
 
 export const WorkOrder = model<IWorkOrder>("WorkOrder", WorkOrderSchema);

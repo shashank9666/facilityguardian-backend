@@ -37,6 +37,14 @@ const InventorySchema = new Schema<IInventory>(
   { timestamps: true }
 );
 
+// Auto-generate code if missing
+InventorySchema.pre("validate", function (next) {
+  if (!this.code) {
+    this.code = `INV-${Math.floor(10000 + Math.random() * 90000)}`;
+  }
+  next();
+});
+
 // Auto-compute status before save
 InventorySchema.pre("save", function (next) {
   if (this.quantity <= 0) this.status = "out_of_stock";

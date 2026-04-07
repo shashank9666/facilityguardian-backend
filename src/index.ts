@@ -45,7 +45,7 @@ app.disable("x-powered-by");
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 min
-  max: 200,
+  max: 2000,
   standardHeaders: true,
   legacyHeaders: false,
   message: { success: false, message: "Too many requests, please try again later." },
@@ -55,7 +55,7 @@ app.use("/api", limiter);
 // Stricter rate limit on auth endpoints
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 20,
+  max: 100,
   message: { success: false, message: "Too many auth attempts, please try again later." },
 });
 app.use("/api/auth/login",    authLimiter);

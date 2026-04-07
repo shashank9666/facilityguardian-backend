@@ -34,8 +34,7 @@ export interface IWorkOrder extends Document {
 }
 
 const AuditEntrySchema = new Schema<IAuditEntry>(
-  { action: String, performedBy: String, timestamp: { type: Date, default: Date.now }, notes: String },
-  { _id: false }
+  { action: String, performedBy: String, timestamp: { type: Date, default: Date.now }, notes: String }
 );
 
 const WorkOrderSchema = new Schema<IWorkOrder>(
